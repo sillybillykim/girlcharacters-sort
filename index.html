@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>양양 자캐 소트 여캐편</title>
+<script type="text/javascript">
+<!--
+//*********************************************************
+//
+// ?価するメンバ?の名前のリスト
+//
+// この部分を変更して下さい。名前の削除・追加も可?です。
+// 名前を引用符(")で括り、コン?(,)で区切って下さい。
+// 但し、リストの最後にはコン?を入れてはいけません。
+//
+//*********************************************************
+var namMember = new Array(
+
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfNzEg/MDAxNzgxNjU0MzM1NjI5.UGmXJiuHe11HfpDgcmpuBQBMHndFoKqfMZ90c8szkrEg.9QG5D_GUMxqDAW_EAUuy64jLrV86BrwaSFCDOSnwamwg.JPEG/SE-55ac6960-605f-4364-bb7e-9526227c77aa.jpg?type=w966> <br>강민지</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfOTEg/MDAxNzgxNjU0MzM2NjE0.3FP1-DIoJTad5LjY1WN5BpcXNJakILoOxEyNuTZC9Gwg.OAodmFkMpaP1n0vnlxHWguyXUY01t45-p_ektRdFjiEg.JPEG/SE-3c4f8b37-f5cc-49f8-bf27-d23ab04ce23d.jpg?type=w966> <br>곽미호</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMjYx/MDAxNzgxNjU0MzM3NjM4.-P2wZx6xbNCrEXJyIViijH1uznWw-sJRWECDLuuzoxUg.4I4neJVBVaj2KGigi9eAtaiHCc7rOf9Jc6PCZi0whKIg.JPEG/SE-acfad6d9-3eb2-40dc-a1ca-a06bb0567727.jpg?type=w966> <br>정상윤</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMjQ1/MDAxNzgxNjU0MzM4Nzc3.mP3vV7Bm4f06iBYL98z4DJ5iG6RlBbd82JBn3VlaRL0g.ZZQFcSCVoqhcVSLt3lTYWT5F8T__PBGPTc5aXshEcT4g.JPEG/SE-e46689d0-6d81-48ec-9ce1-6fa1b11a827e.jpg?type=w966> <br>송이슬</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMTc3/MDAxNzgxNjU0MzQwMTA2.x8NaQCnDpNePLGwSZTCVGWGUx6ttVDzM64oiauER_1Ug.BblU9EUY8itmFAIiPZ3p8uxEO5H0VC2-NWUT4uk2810g.JPEG/SE-82912fbc-2b3c-4156-9ad1-76fb1d00f21c.jpg?type=w966> <br>주연재</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMTE0/MDAxNzgxNjU0MzQxNTE2.EqTX7mqp4OllOkYfBJK1q-6tse2r3st307Hty_p_154g.FSsWFfV6HTh_8qttkBgteg-hRosvIFBeO3W0mXLmk0Qg.JPEG/SE-5fcb4933-60f2-4904-9061-e61cbbf5679d.jpg?type=w966> <br>홍하나</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMjM1/MDAxNzgxNjU0MzQyNTk1.dh__wAQrkQJpoAxWxgZhLcv-ajX23XUUQaPiwiOKpqAg.QmY9QA5f7iLytH9FePNvDfvdmiDvvA2cJOwobd-sJ-Ig.JPEG/SE-a793613a-2e5d-47a2-8af8-6f7f8478f0f9.jpg?type=w966> <br>류진주</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMTMx/MDAxNzgxNjU0MzQzNjky.fgiX0AwkJZy7AShS-QJ--tuMygjSaDlniGN7qVjTKBkg.EQe-qEz61AZ_H8WKJVG3W06r0EGKYaYSTsTr5oUaqxwg.PNG/SE-f3df234e-fb1c-4b5d-93db-576b5a36c00e.png?type=w966> <br>배도은</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMjA4/MDAxNzgxNjU0MzQ0NjI1.T6Ltw5Xfjoa-fQJSZTc4Mrhl0FcJwbTU5kNItCyHTNYg.ZEI53d4uk9Ei4H9UvPtnxbSEAcyZlJzGKqnaTIpf1JEg.JPEG/SE-97005b58-0185-4a38-8c15-ff256d670d37.jpg?type=w966> <br>손승연</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfNTMg/MDAxNzgxNjU0MzQ2NTE5.FzxX-FAxW2A5ISqs82M0JkOS5v3OSwsnair_5Mh86AMg.IR21fsClSBvp8hY2mi2Q7hC2UhWZxidknx7hLFuXHWAg.JPEG/SE-1ed20ce0-3388-4e45-9256-ce4e85dac4b2.jpg?type=w966> <br>유영국</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMTk4/MDAxNzgxNjU0MzQ3ODY0.B4u9hZAvdCRcVEn2sp6MS8i1fHfrGku8iSIR5foPFfwg.3WZ2Ke2vvMDJd_yknhAInE4mOWV1gU-80t8qm7B00tkg.PNG/SE-1a9a6354-6b37-4576-b675-e54d2134ca69.png?type=w966> <br>서엘리</br>",
+"<img src=https://postfiles.pstatic.net/MjAyNjA2MTdfMTIg/MDAxNzgxNjU0MzQ4OTk0.RHaz_X5YzKLKhmzI2qylBKZy9VLsyLbd5yGHbKcOloIg.O-CJyxCJIHpRjB8kZjOXjkJu1ERg0W_r-ob_fsUJGT0g.JPEG/SE-1513d746-fb8e-4dd4-bb15-c9d8fe2e98c4.jpg?type=w966> <br>권혜지 (우측)</br>",
+
+
+);
+//*********************************************************
+
+var lstMember = new Array();
+var parent = new Array();
+var equal = new Array();
+var rec = new Array();
+var cmp1,cmp2;
+var head1,head2;
+var nrec;
+
+var numQuestion;
+var totalSize;
+var finishSize;
+var finishFlag;
+
+//変数の初期化+++++++++++++++++++++++++++++++++++++++++++++
+function initList(){
+var n = 0;
+var mid;
+var i;
+
+//??トすべき配列
+lstMember[n] = new Array();
+for (i=0; i<namMember.length; i++) {
+lstMember[n][i] = i;
+}
+parent[n] = -1;
+totalSize = 0;
+n++;
+
+for (i=0; i<lstMember.length; i++) {
+//要素数が２以上なら２分割し、
+//分割された配列をlstMemberの最後に加える
+if(lstMember[i].length>=2) {
+mid = Math.ceil(lstMember[i].length/2);
+lstMember[n] = new Array();
+lstMember[n] = lstMember[i].slice(0,mid);
+totalSize += lstMember[n].length;
+parent[n] = i;
+n++;
+lstMember[n] = new Array();
+lstMember[n] = lstMember[i].slice(mid,lstMember[i].length);
+totalSize += lstMember[n].length;
+parent[n] = i;
+n++;
+}
+}
+
+//保存用配列
+for (i=0; i<namMember.length; i++) {
+rec[i] = 0;
+}
+nrec = 0;
+
+//引き分けの結果を保存するリスト
+//キ?：リンク始?の値
+// 値 ：リンク終?の値
+for (i=0; i<=namMember.length; i++) {
+equal[i] = -1;
+}
+
+cmp1 = lstMember.length-2;
+cmp2 = lstMember.length-1;
+head1 = 0;
+head2 = 0;
+numQuestion = 1;
+finishSize = 0;
+finishFlag = 0;
+}
+
+//リストの??ト+++++++++++++++++++++++++++++++++++++++++++
+//flag：比較結果
+//  -1：左を選択
+//   0：引き分け
+//   1：右を選択
+function sortList(flag){
+var i;
+var str;
+
+//recに保存
+if (flag<0) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+}
+else if (flag>0) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+else {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+equal[rec[nrec-1]] = lstMember[cmp2][head2];
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+
+//片方のリストを走査し終えた後の処理
+if (head1<lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+//リストcmp2が走査済 - リストcmp1の残りをコピ?
+while (head1<lstMember[cmp1].length){
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+}
+else if (head1==lstMember[cmp1].length && head2<lstMember[cmp2].length) {
+//リストcmp1が走査済 - リストcmp2の残りをコピ?
+while (head2<lstMember[cmp2].length){
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+
+//両方のリストの最後に到達した場合は
+//親リストを更新する
+if (head1==lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+for (i=0; i<lstMember[cmp1].length+lstMember[cmp2].length; i++) {
+lstMember[parent[cmp1]][i] = rec[i];
+}
+lstMember.pop();
+lstMember.pop();
+cmp1 = cmp1-2;
+cmp2 = cmp2-2;
+head1 = 0;
+head2 = 0;
+
+//新しい比較を行う前にrecを初期化
+if (head1==0 && head2==0) {
+for (i=0; i<namMember.length; i++) {
+rec[i] = 0;
+}
+nrec = 0;
+}
+}
+
+if (cmp1<0) {
+str = "Battle No."+(numQuestion-1)+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+document.getElementById("battleNumber").innerHTML = str;
+
+showResult();
+finishFlag = 1;
+}
+else {
+showImage();
+}
+}
+
+//結果の?示+++++++++++++++++++++++++++++++++++++++++++++++
+function showResult() {
+var ranking = 1;
+var sameRank = 1;
+var str = "";
+var i;
+
+str += "<table style=\"width:200px; font-size:12px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #000; border-collapse:collapse\" align=\"center\">";
+str += "<tr><td style=\"color:#ffffff; background-color:#000; text-align:center;\">순위<\/td><td style=\"color:#ffffff; background-color:#000; text-align:center;\">이름<\/td><\/tr>";
+
+for (i=0; i<namMember.length; i++) {
+str += "<tr><td style=\"border:1px solid #000; text-align:right; padding-right:5px;\">"+ranking+"<\/td><td style=\"border:1px solid #000; padding-left:5px;\">"+namMember[lstMember[0][i]]+"<\/td><\/tr>";
+if (i<namMember.length-1) {
+if (equal[lstMember[0][i]]==lstMember[0][i+1]) {
+sameRank++;
+} else {
+ranking += sameRank;
+sameRank = 1;
+}
+}
+}
+str += "<\/table>";
+
+document.getElementById("resultField").innerHTML = str;
+}
+
+//比較する２つ要素の?示+++++++++++++++++++++++++++++++++++
+function showImage() {
+var str0 = "Battle No."+numQuestion+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+var str1 = ""+toNameFace(lstMember[cmp1][head1]);
+var str2 = ""+toNameFace(lstMember[cmp2][head2]);
+
+document.getElementById("battleNumber").innerHTML = str0;
+document.getElementById("leftField").innerHTML = str1;
+document.getElementById("rightField").innerHTML = str2;
+
+numQuestion++;
+}
+
+//数値を名前（顔文字）に変換+++++++++++++++++++++++++++++++
+function toNameFace(n){
+var str = namMember[n];
+
+//顔文字を追加する場合は以下のコメントアウトを外す
+//namMemberのインデックスと矛盾しないように注意
+/*
+str += "<br>────<br>";
+switch(n) {
+//case -1 はサンプルなので削除すること
+case -1: str+="（ ´∀｀）";break;
+default: str+=""+n;
+}
+*/
+return str;
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+/**********************************************************
+
+ ?のス?イルを変更する場合はここを編集してください。
+
+**********************************************************/
+#mainTable{
+font-size: 12px;
+font-family: '돋움',sans-serif;
+text-align: center;
+vertical-align: middle;
+width: 550px;
+margin-left: auto;
+margin-right: auto;
+border-collapse: separate;
+border-spacing: 10px 5px;
+}
+#leftField{
+width: 120px;
+height: 150px;
+border: 1px solid #000;
+}
+#rightField{
+width: 120px;
+height: 150px;
+border: 1px solid #000;
+}
+.middleField{
+width: 250px;
+height: 70px;
+border: 1px solid #000;
+}
+//-->
+<!--
+A{
+  text-decoration : none;
+}
+-->
+<!--
+a:hover{color:#99ccff;}
+-->
+</style>
+<meta name="generator" content="Namo WebEditor(Trial)">
+<meta http-equiv="content-type" content="text/html; charset=utf-8"></head>
+
+<body text="#000000" bgcolor="#ffffff" link="#0099ff" vlink="#0099ff" alink="#0099ff">
+<table id="mainTable" align="center">
+<tr>
+        <td id="battleNumber" colspan="3" style="padding-bottom: 10px;">
+            <p>&nbsp;</p>
+        </td>
+</tr>
+<tr>
+<td id="leftField" onClick="if(finishFlag==0)sortList(-1);" rowspan="2">
+&nbsp;
+</td>
+<td class="middleField" onClick="if(finishFlag==0)sortList(0);">
+둘 다 좋다
+</td>
+<td id="rightField" onClick="if(finishFlag==0)sortList(1);" rowspan="2">
+</td>
+</tr>
+<tr>
+<td class="middleField" onClick="if(finishFlag==0)sortList(0);">
+모르겠다
+</td>
+</tr>
+</table><br><br>
+<div id="resultField" style="text-align:center;">
+
+
+</div>
+<script type="text/javascript">
+<!--
+initList();
+showImage();
+//-->
+</script>
+
+</body>
+</html>
